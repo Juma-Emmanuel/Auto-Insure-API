@@ -1,6 +1,8 @@
 package io.api.AutoInsure.controller;
 
 import io.api.AutoInsure.config.MyUserDetails;
+import io.api.AutoInsure.dto.UserDTO;
+import io.api.AutoInsure.exception.UnauthorizedException;
 import io.api.AutoInsure.response.TokenResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,17 +33,15 @@ public class UserController {
     private AuthenticationManager authenticationManager;
 
     @GetMapping("/current-user")
-    public ResponseEntity<MyUserDetails> currentUser() {
-        SecurityContext context = SecurityContextHolder.getContext();
-        Authentication authentication = context.getAuthentication();
-
-        if (authentication != null && authentication.getPrincipal() instanceof MyUserDetails) {
-            MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
-            return ResponseEntity.ok(userDetails);
-        } else {
+    public ResponseEntity<UserDTO> currentUser() {
+        try {
+            UserDTO userDTO = userService.getCurrentUserDetails();
+            return ResponseEntity.ok(userDTO);
+        } catch (UnauthorizedException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
+
 
 
 
@@ -51,23 +51,27 @@ public class UserController {
         String message = userService.registerUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(message);
     }
-
-@PostMapping("/authenticate")
-public ResponseEntity<TokenResponse> authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
-    try {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
-
-        if (authentication.isAuthenticated()) {
-            String token = jwtService.generateToken(authRequest.getUsername());
-            TokenResponse tokenResponse = new TokenResponse(token);
-            return ResponseEntity.ok(tokenResponse);
-        } else {
+    @PostMapping("/authenticate")
+    public ResponseEntity<TokenResponse> authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+            if (authentication.isAuthenticated()) {
+                String token = jwtService.generateToken(authRequest.getUsername());
+                TokenResponse tokenResponse = new TokenResponse(token);
+                return ResponseEntity.ok(tokenResponse);
+            } else {
             throw new UsernameNotFoundException("Invalid user request!");
+            }
+        } catch (AuthenticationException e) {
+            throw new UsernameNotFoundException("Invalid username or password", e);
         }
-    } catch (AuthenticationException e) {
-        throw new UsernameNotFoundException("Invalid username or password", e);
+
     }
-}
+    @PutMapping("/{userId}")
+    public ResponseEntity<User> updateUserDetails(@PathVariable int userId, @RequestBody User updatedUser) {
+        User user = userService.updateUserDetails(userId, updatedUser);
+        return ResponseEntity.ok(user);
+    }
 }
 
