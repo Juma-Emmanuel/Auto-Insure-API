@@ -1,7 +1,8 @@
 package io.api.AutoInsure.controller;
 
-import io.api.AutoInsure.config.MyUserDetails;
+//import io.api.AutoInsure.config.MyUserDetails;
 import io.api.AutoInsure.dto.UserDTO;
+//import io.api.AutoInsure.exception.UnauthorizedException;
 import io.api.AutoInsure.exception.UnauthorizedException;
 import io.api.AutoInsure.response.TokenResponse;
 import jakarta.validation.Valid;
