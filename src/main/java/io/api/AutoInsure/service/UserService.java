@@ -39,6 +39,7 @@ public class UserService {
         if (authentication != null && authentication.getPrincipal() instanceof MyUserDetails) {
             MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
             return new UserDTO(
+                    userDetails.getUser().getNationalId(),
                     userDetails.getUser().getFullName(),
                     userDetails.getUser().getEmail(),
                     userDetails.getUser().getPhoneNumber(),

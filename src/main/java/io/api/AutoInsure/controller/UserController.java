@@ -42,10 +42,6 @@ public class UserController {
         }
     }
 
-
-
-
-
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@Valid @RequestBody User user) {
         String message = userService.registerUser(user);

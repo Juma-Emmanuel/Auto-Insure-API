@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class UserDTO {
 
-
+private int nationalId;
     private String fullName;
 
     private String email;
@@ -14,7 +14,8 @@ public class UserDTO {
 
     private String country;
 
-    public UserDTO(String fullName,  String email, String phoneNumber,String country) {
+    public UserDTO(int nationalId, String fullName,  String email, String phoneNumber,String country) {
+       this.nationalId =nationalId;
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;
         this.email = email;
