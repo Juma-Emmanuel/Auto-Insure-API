@@ -48,7 +48,7 @@ public class ProfilePicService {
         fileEntity.setUserId(userId);
         fileEntity.setFileName(fileName);
         fileEntity.setFileType(file.getContentType());
-        fileEntity.setFileUrl(filePath.toString());
+        fileEntity.setFileUrl(fileName);
 
         return profilePicRepository.save(fileEntity);
     }
@@ -69,7 +69,7 @@ public class ProfilePicService {
             // Update existing file entity
             existingFile.setFileName(fileName);
             existingFile.setFileType(file.getContentType());
-            existingFile.setFileUrl(filePath.toString());
+            existingFile.setFileUrl(fileName);
 
             return profilePicRepository.save(existingFile);
         } else {
@@ -78,31 +78,7 @@ public class ProfilePicService {
         }
     }
 
-//    public ProfilePic updateProfilePicture(int userId, MultipartFile file) throws IOException {
-//        Optional<ProfilePic> existingFileOptional = profilePicRepository.findByUserId(userId);
-//
-//        if (existingFileOptional.isPresent()) {
-//            ProfilePic existingFile = existingFileOptional.get();
-//
-//            // Delete existing file
-//            java.nio.file.Files.delete(java.nio.file.Paths.get(existingFile.getFileUrl()));
-//
-//            // Save new file
-//            String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
-//
-//            java.nio.file.Path filePath = java.nio.file.Paths.get("/path/to/your/storage/location" + "/" + fileName);
-//            java.nio.file.Files.copy(file.getInputStream(), filePath, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
-//
-//            existingFile.setFileName(fileName);
-//            existingFile.setFileType(file.getContentType());
-//            existingFile.setFileUrl(filePath.toString());
-//
-//            return profilePicRepository.save(existingFile);
-//        } else {
-//            // Handle error if file not found for the user
-//            throw new NotFoundException("Profile picture not found for user: " + userId);
-//        }
-//    }
+
     public void deleteFile(Long id) {
         Optional<ProfilePic> optionalFile = profilePicRepository.findById(id);
         optionalFile.ifPresent(file -> {
