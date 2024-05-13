@@ -40,7 +40,7 @@ public class ProfilePicService {
             Files.createDirectories(Paths.get(fileStorageLocation));
         }
 
-        String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+        String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
         Path filePath = Paths.get(fileStorageLocation).resolve(fileName).normalize();
         Files.copy(file.getInputStream(), filePath, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
 
@@ -62,7 +62,7 @@ public class ProfilePicService {
             Files.deleteIfExists(Paths.get(existingFile.getFileUrl()));
 
             // Save new file
-            String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+            String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
             Path filePath = Paths.get(fileStorageLocation).resolve(fileName).normalize();
             Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 

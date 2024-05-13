@@ -17,11 +17,11 @@ import java.util.stream.Collectors;
 public class MyUserDetails implements UserDetails {
 
 
-    private String email;
-    private String password;
-    private List<GrantedAuthority> authorities;
+    private final String email;
+    private final String password;
+    private final List<GrantedAuthority> authorities;
 
-    private User user;
+    private final User user;
 
      public MyUserDetails(User user) {
       this.user = user;

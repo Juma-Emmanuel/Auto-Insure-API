@@ -36,8 +36,7 @@ public class UserService {
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
 
-        if (authentication != null && authentication.getPrincipal() instanceof MyUserDetails) {
-            MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
+        if (authentication != null && authentication.getPrincipal() instanceof MyUserDetails userDetails) {
             return new UserDTO(
                     userDetails.getUser().getNationalId(),
                     userDetails.getUser().getFullName(),
