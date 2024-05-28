@@ -57,7 +57,9 @@ public class UserController {
                 TokenResponse tokenResponse = new TokenResponse(token);
                 return ResponseEntity.ok(tokenResponse);
             } else {
+                System.out.println("invalid credentials");
             throw new UsernameNotFoundException("Invalid user request!");
+
             }
         } catch (AuthenticationException e) {
             throw new UsernameNotFoundException("Invalid username or password", e);

@@ -3,6 +3,7 @@ package io.api.AutoInsure.controller;
 
 import io.api.AutoInsure.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +19,15 @@ import java.util.List;
 @RequestMapping("/files")
 public class ProfilePicControler{
 
+    @Value("${file.storage.location}")
+    private String fileStorageLocation;
+
+
+
     @Autowired
     private ProfilePicService profilePicService;
+
+
 
     @GetMapping
     public ResponseEntity<List<ProfilePic>> getAllFiles() {

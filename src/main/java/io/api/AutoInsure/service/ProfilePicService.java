@@ -4,6 +4,7 @@ import io.api.AutoInsure.entity.ProfilePic;
 import io.api.AutoInsure.exception.NotFoundException;
 import io.api.AutoInsure.repository.ProfilePicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,6 +19,8 @@ import java.util.UUID;
 
 @Service
 public class ProfilePicService {
+    @Value("${server.url}")
+    private String serverUrl;
     @Autowired
     private ProfilePicRepository profilePicRepository;
 
@@ -48,7 +51,8 @@ public class ProfilePicService {
         fileEntity.setUserId(userId);
         fileEntity.setFileName(fileName);
         fileEntity.setFileType(file.getContentType());
-        fileEntity.setFileUrl(filePath.toString());
+//        fileEntity.setFileUrl(filePath.toString());
+        fileEntity.setFileUrl(serverUrl + "/uploads/" + fileName);
 
         return profilePicRepository.save(fileEntity);
     }

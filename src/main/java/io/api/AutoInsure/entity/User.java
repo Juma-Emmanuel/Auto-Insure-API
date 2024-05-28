@@ -32,16 +32,10 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int nationalId;
-
     private String fullName;
-
     private String email;
-
     private String phoneNumber;
-
     private String country;
-
-
     private String password;
 
 
