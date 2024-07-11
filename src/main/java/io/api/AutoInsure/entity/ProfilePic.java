@@ -12,7 +12,6 @@ public class ProfilePic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private int userId;
     private String fileName;
     private String fileType;

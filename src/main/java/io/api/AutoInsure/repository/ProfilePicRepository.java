@@ -9,6 +9,9 @@ import java.util.Optional;
 @Repository
 public interface ProfilePicRepository extends JpaRepository<ProfilePic, Long> {
     Optional<ProfilePic> findByUserId(int userId);
+
+    void deleteByUserId(int userId);
+
     List<ProfilePic> findByFileNameContainingIgnoreCase(String fileName);
     List<ProfilePic> findByFileType(String fileType);
 }
